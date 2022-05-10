@@ -1,0 +1,9 @@
+#!/bin/bash
+yum install -y java
+yum install -y amazon-cloudwatch-agent
+wget https://github.com/bwhsdzf/smartbankdeploypack/archive/refs/heads/master.zip
+unzip master.zip
+cd smart*
+cp *.json /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+java -Dspring.datasource.url=jdbc:postgresql://${db_endpoint}/marsrdstf -jar smart-bank-api.jar &
