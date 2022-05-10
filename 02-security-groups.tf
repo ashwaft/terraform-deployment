@@ -12,8 +12,8 @@ resource "aws_security_group" "mars_api_sg" {
   }
   # HTTP access from the internet
   ingress {
-    from_port       = 8080
-    to_port         = 8080
+    from_port       = local.API
+    to_port         = local.API
     protocol        = "tcp"
     security_groups = ["${aws_security_group.mars_lb_sg.id}"]
   }
@@ -40,8 +40,8 @@ resource "aws_security_group" "mars_react_sg" {
   }
   # HTTP access from the internet
   ingress {
-    from_port       = 3000
-    to_port         = 3000
+    from_port       = local.React
+    to_port         = local.React
     protocol        = "tcp"
     security_groups = ["${aws_security_group.mars_lb_sg.id}"]
   }
@@ -61,14 +61,14 @@ resource "aws_security_group" "mars_rds_sg_tf" {
   vpc_id      = "vpc-0a57416e207a78d4e"
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = local.API
+    to_port     = local.API
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 5432
-    to_port     = 5432
+    from_port   = local.DB
+    to_port     = local.DB
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -80,8 +80,8 @@ resource "aws_security_group" "mars_rds_sg_tf" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port   = 5432
-    to_port     = 5432
+    from_port   = local.DB
+    to_port     = local.DB
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -95,14 +95,14 @@ resource "aws_security_group" "mars_lb_sg" {
   vpc_id      = "vpc-0a57416e207a78d4e"
   # SSH access from anywhere
   ingress {
-    from_port   = 3000
-    to_port     = 3000
+    from_port   = local.React
+    to_port     = local.React
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = local.API
+    to_port     = local.API
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

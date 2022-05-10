@@ -1,16 +1,22 @@
 /*********************** Target Groups ***************************/
 resource "aws_lb_target_group" "mars_api_tg_tf" {
   name     = "mars-api-tg-tf"
-  port     = 8080
+  port     = local.API
   protocol = "HTTP"
   vpc_id   = "vpc-0a57416e207a78d4e"
+  health_check {
+    path = "/healthcheck"
+  }
 }
 
 resource "aws_lb_target_group" "mars_react_tg_tf" {
   name     = "mars-react-tg-tf"
-  port     = 3000
+  port     = local.React
   protocol = "HTTP"
   vpc_id   = "vpc-0a57416e207a78d4e"
+  health_check {
+    path = "/healthcheck"
+  }
 }
 
 /****************** Application Load Balancer ********************/
@@ -33,7 +39,7 @@ resource "aws_lb" "mars_lb_tf" {
 /****************** API Listener ********************/
 resource "aws_lb_listener" "mars_api_listener_tf" {
   load_balancer_arn = aws_lb.mars_lb_tf.arn
-  port              = "8080"
+  port              = local.API
   protocol          = "HTTP"
 
   default_action {
@@ -45,7 +51,7 @@ resource "aws_lb_listener" "mars_api_listener_tf" {
 /****************** UI Listener ********************/
 resource "aws_lb_listener" "mars_react_listener_tf" {
   load_balancer_arn = aws_lb.mars_lb_tf.arn
-  port              = "3000"
+  port              = local.React
   protocol          = "HTTP"
 
   default_action {
