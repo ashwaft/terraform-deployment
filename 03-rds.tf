@@ -16,7 +16,7 @@ resource "aws_db_instance" "mars_rds_tf" {
   engine_version          = "13.4"
   instance_class          = "db.t3.micro"
   multi_az                = true
-  port                    = 5432
+  port                    = local.DB
   publicly_accessible     = false
   storage_encrypted       = false
   storage_type            = "gp2"

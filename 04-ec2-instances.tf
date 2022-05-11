@@ -22,4 +22,4 @@
 #   user_data                   = file("${path.module}/bootstrap-ui.sh")
 # }
 
-#TODO: Create a public EC2 as a bastion host?
+#TODO: Create a public EC2 as a bastion host???

@@ -3,11 +3,11 @@ resource "aws_launch_template" "mars_api_template-tf" {
   name          = "mars-api-tf"
   image_id      = "ami-02b92c281a4d3dc79"
   instance_type = "t2.micro"
-  user_data     = base64encode(templatefile("api_install.tftpl", { db_endpoint = "${aws_db_instance.mars_rds_tf.endpoint}" }))
+   user_data     = base64encode(templatefile("api_install.tftpl", { db_endpoint = "${aws_db_instance.mars_rds_tf.endpoint}" }))
 
-  depends_on = [
-    aws_db_instance.mars_rds_tf,
-  ]
+   depends_on = [
+     aws_db_instance.mars_rds_tf,
+   ]
 
   network_interfaces {
     subnet_id       = "subnet-061bffe90e7909287"
@@ -51,6 +51,7 @@ resource "aws_launch_template" "mars_react_template-tf" {
 
 resource "aws_autoscaling_group" "mars_api_asg-tf" {
   vpc_zone_identifier = ["subnet-061bffe90e7909287", "subnet-05d01ddea5466b79a"]
+  name                = "mars-api-asg-tf"
   desired_capacity    = 2
   max_size            = 2
   min_size            = 2
@@ -63,8 +64,9 @@ resource "aws_autoscaling_group" "mars_api_asg-tf" {
 
 resource "aws_autoscaling_group" "mars_react_asg-tf" {
   vpc_zone_identifier = ["subnet-061bffe90e7909287", "subnet-05d01ddea5466b79a"]
+  name                = "mars-react-asg-tf"
   desired_capacity    = 2
-  max_size            = 2
+  max_size            = 4
   min_size            = 2
   target_group_arns   = ["${aws_lb_target_group.mars_react_tg_tf.arn}"]
   launch_template {
