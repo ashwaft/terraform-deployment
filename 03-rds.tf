@@ -17,7 +17,7 @@ resource "aws_db_instance" "mars_rds_tf" {
   instance_class          = "db.t3.micro"
   multi_az                = true
   port                    = local.DB
-  publicly_accessible     = false
+  publicly_accessible     = true
   storage_encrypted       = false
   storage_type            = "gp2"
   vpc_security_group_ids  = ["${aws_security_group.mars_rds_sg_tf.id}"]
