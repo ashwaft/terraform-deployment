@@ -30,8 +30,11 @@ variable "db_password" {
   sensitive   = true
 }
 
-
-
+variable "bastion_key" {
+  description = "Key Pair for Mars Bastion"
+  type        = string
+  default     = "mars-key"
+}
 
 # variable "api_iam_instance_profile" {
 #   description = "Name of IAM instance profile associated with launched instances"

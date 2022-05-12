@@ -3,12 +3,12 @@ resource "aws_security_group" "mars_api_sg" {
   name        = "mars-smartbank-api-sg-tf"
   description = "Terraform Mars API SG"
   vpc_id      = "vpc-0a57416e207a78d4e"
-  # SSH access from anywhere
+  # SSH access from Bastion
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = ["${aws_security_group.mars_bastion_sg.id}"]
   }
   # HTTP access from the internet
   ingress {
@@ -31,12 +31,12 @@ resource "aws_security_group" "mars_react_sg" {
   name        = "mars-smartbank-react-sg-tf"
   description = "Terraform Mars React SG"
   vpc_id      = "vpc-0a57416e207a78d4e"
-  # SSH access from anywhere
+  # SSH access from Bastion
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = ["${aws_security_group.mars_bastion_sg.id}"]
   }
   # HTTP access from the internet
   ingress {
@@ -103,6 +103,27 @@ resource "aws_security_group" "mars_lb_sg" {
   ingress {
     from_port   = local.API
     to_port     = local.API
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+/**************** Bastion SG *******************/
+resource "aws_security_group" "mars_bastion_sg" {
+  name        = "mars-bastion-sg"
+  description = "Mars Bastion SG"
+  vpc_id      = "vpc-0a57416e207a78d4e"
+  # SSH access from anywhere
+  ingress {
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

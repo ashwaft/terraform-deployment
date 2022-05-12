@@ -38,7 +38,7 @@ output "aws_db_instance_db_identifier" {
   value       = aws_db_instance.mars_rds_tf.identifier
 }
 
-output "user_data_api_launch_tempalte" {
+output "user_data_api_launch_template" {
   description = "The User data for api"
   value       = aws_launch_template.mars_api_template-tf.user_data
 }
@@ -53,3 +53,7 @@ output "user_data_api_launch_tempalte" {
 #   value = aws_instance.mars_smartbank_react.user_data_base64
 # }
 
+output "bastion_ip" {
+  description = "Bastion EC2 IP"
+  value       = aws_instance.mars_bastion.public_ip
+}
