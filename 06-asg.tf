@@ -3,11 +3,12 @@ resource "aws_launch_template" "mars_api_template-tf" {
   name          = "mars-api-tf"
   image_id      = "ami-02b92c281a4d3dc79"
   instance_type = "t2.micro"
-   user_data     = base64encode(templatefile("api_install.tftpl", { db_endpoint = "${aws_db_instance.mars_rds_tf.endpoint}" }))
+  key_name      = var.bastion_key
+  user_data     = base64encode(templatefile("api_install.tftpl", { db_endpoint = "${aws_db_instance.mars_rds_tf.endpoint}" }))
 
-   depends_on = [
-     aws_db_instance.mars_rds_tf,
-   ]
+  depends_on = [
+    aws_db_instance.mars_rds_tf,
+  ]
 
   network_interfaces {
     subnet_id       = "subnet-061bffe90e7909287"
@@ -33,6 +34,7 @@ resource "aws_launch_template" "mars_react_template-tf" {
   image_id      = "ami-02b92c281a4d3dc79"
   instance_type = "t2.micro"
   tags          = { Name = "mars Terraform React" }
+  key_name      = var.bastion_key
   user_data     = filebase64("${path.module}/bootstrap-ui.sh")
 
   network_interfaces {
