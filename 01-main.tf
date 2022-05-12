@@ -9,6 +9,15 @@ terraform {
       version = "~> 3.0"
     }
   }
+
+  # Eventually will be abstracted out to allow for multiple env config
+  backend "s3" {
+    bucket         = "terraform-mars"
+    key            = "terraform-deployment/dev/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-deployment-dev-tfstate"
+    profile        = "scb-bootcamp"
+  }
 }
 
 # Provider Block
