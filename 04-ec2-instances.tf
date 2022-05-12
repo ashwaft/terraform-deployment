@@ -23,3 +23,12 @@
 # }
 
 #TODO: Create a public EC2 as a bastion host???
+resource "aws_instance" "mars_bastion" {
+  ami                         = "ami-02b92c281a4d3dc79"
+  instance_type               = "t2.micro"
+  subnet_id                   = "subnet-034e789f0990c2b56"
+  associate_public_ip_address = true
+  key_name                    = var.bastion_key
+  tags                        = { Name = "Mars Bastion" }
+  vpc_security_group_ids      = ["${aws_security_group.mars_bastion_sg.id}"]
+}
