@@ -8,13 +8,14 @@ pipeline {
         }
         stage("Validation") {
             steps {
-                sh "terraform fmt"
+                sh "terraform fmt -check -recursive -list=true -difft"
                 sh "tflint"
             }
         }
         stage('terraform init') {
             steps {
                 sh "terraform init"
+                sh "terraform validate"
             }
         }
         stage("terraform Action") {
