@@ -6,6 +6,12 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ashwaft/terraform-deployment'
             }
         }
+        stage("Validation") {
+            steps {
+                sh "terraform fmt"
+                sh "tflint"
+            }
+        }
         stage('terraform init') {
             steps {
                 sh "terraform init"
