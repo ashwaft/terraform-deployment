@@ -9,8 +9,8 @@ pipeline {
         stage("Validation") {
             steps {
                 sh "terraform fmt"
-                sh "tflint --init"
-                sh "tflint"
+                // sh "tflint --init"
+                // sh "tflint"
             }
         }
         stage('terraform init') {
