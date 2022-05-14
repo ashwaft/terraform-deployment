@@ -29,6 +29,6 @@ resource "aws_instance" "mars_bastion" {
   subnet_id                   = "subnet-034e789f0990c2b56"
   associate_public_ip_address = true
   key_name                    = var.bastion_key
-  tags                        = { Name = "Mars Bastion" }
+  tags                        = { Name = "mars bastion" }
   vpc_security_group_ids      = ["${aws_security_group.mars_bastion_sg.id}"]
 }
