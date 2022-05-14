@@ -17,8 +17,6 @@ pipeline {
             steps {
                 sh "terraform fmt"
                 sh "terraform validate"
-                // sh "tflint --init"
-                // sh "tflint"
             }
         }
         stage("Terraform Action") {
@@ -28,14 +26,6 @@ pipeline {
                     sh("terraform ${action} -var-file $db --auto-approve")
                     }
             }
-            post {
-                failure {
-                    mail to: 'tengku.m.asyraf@gmail.com',
-                    subject: "Failed Jenkins Pipeline for ${currentBuild.fullDisplayName}"
-                    body: "Error with ${env.BUILD_URL}"
-                }
-            }
         }
-
     }
 }
