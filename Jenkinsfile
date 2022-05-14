@@ -23,8 +23,11 @@ pipeline {
         }
         stage("terraform Action") {
             steps {
-                echo "Terraform action: ${action}"
-                sh("terraform ${action} --auto-approve")
+                withCredentials([file(credentialsId: 'db', variable: 'db')]) {
+                    echo "Terraform action: ${action}"
+                    sh("terraform ${action} -var-file $db --auto-approve")
+                    }
+
             }
         }
     }
