@@ -5,9 +5,9 @@ resource "aws_security_group" "mars_api_sg" {
   vpc_id      = "vpc-0a57416e207a78d4e"
   # SSH access from Bastion
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.mars_bastion_sg.id}"]
   }
   # HTTP access from the internet
@@ -33,9 +33,9 @@ resource "aws_security_group" "mars_react_sg" {
   vpc_id      = "vpc-0a57416e207a78d4e"
   # SSH access from Bastion
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.mars_bastion_sg.id}"]
   }
   # HTTP access from the internet
