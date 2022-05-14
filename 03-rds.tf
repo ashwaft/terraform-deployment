@@ -9,13 +9,14 @@ resource "aws_db_instance" "mars_rds_tf" {
   username                = var.db_username
   password                = var.db_password
   identifier              = var.db_identifier
+  availability_zone       = "us-west-2a"
   allocated_storage       = 256 # gigabytes
   backup_retention_period = 7   # in days
   db_subnet_group_name    = aws_db_subnet_group.db-subnet.name
   engine                  = "postgres"
   engine_version          = "13.4"
   instance_class          = "db.t3.micro"
-  multi_az                = true
+  multi_az                = false
   port                    = local.DB
   publicly_accessible     = true
   storage_encrypted       = false
