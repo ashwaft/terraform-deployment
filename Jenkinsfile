@@ -15,9 +15,11 @@ pipeline {
         }
         stage('terraform init') {
             steps {
-                sh "terraform init"
-                sh "terraform validate"
-            }
+                withCredentials([file(credentialsId: 'secrets.db', variable: 'secrets'), file(credentialsId: 'db.tfvars', variable: 'db')]) {
+                    sh "terraform init -var-file $db $secrets"
+                    sh "terraform validate"
+                    }
+                    }
         }
         stage("terraform Action") {
             steps {
